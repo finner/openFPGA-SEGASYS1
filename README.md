@@ -6,7 +6,7 @@
 
 ## Status
 
-Initial openFPGA port (v0.1.0):
+Initial openFPGA port (v0.16):
 
 - Vendored MiSTer game RTL (`SEGASYSTEM1`, T80, SN76489, HVGEN, spinner)
 - APF `core_top` with ROM load, SYSMODE/DSW/flip via Interact, I2S audio
