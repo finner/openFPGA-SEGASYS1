@@ -1,0 +1,34 @@
+{
+	"instance": {
+		"magic": "APF_VER_1",
+		"variant_select": {
+			"id": 0,
+			"select": false
+		},
+		"data_path": "",
+		"data_slots": [
+			{
+				"id": 1,
+				"filename": "flicky.rom"
+			},
+			{
+				"id": 2,
+				"filename": "flicky.sys"
+			}
+		],
+		"memory_writes": [
+			{
+				"address": "0x10000000",
+				"data": "0x00000000"
+			},
+			{
+				"address": "0x20000000",
+				"data": "0x000000FF"
+			},
+			{
+				"address": "0x30000000",
+				"data": "0x0000007C"
+			}
+		]
+	}
+}
