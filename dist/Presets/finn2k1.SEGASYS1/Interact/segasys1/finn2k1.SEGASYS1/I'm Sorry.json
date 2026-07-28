@@ -1,0 +1,106 @@
+{
+  "interact": {
+    "magic": "APF_VER_1",
+    "variables": [
+      {
+        "name": "Reset",
+        "id": 0,
+        "type": "action",
+        "enabled": true,
+        "address": "0x80000000",
+        "value": 1
+      },
+      {
+        "name": "Demo Sound",
+        "id": 10,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFFD",
+        "defaultval": 1,
+        "options": [
+          {
+            "name": "On",
+            "value": 0
+          },
+          {
+            "name": "Off",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "name": "Lives",
+        "id": 11,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFF3",
+        "defaultval": 3,
+        "options": [
+          {
+            "name": "Infinite",
+            "value": 0
+          },
+          {
+            "name": "5",
+            "value": 4
+          },
+          {
+            "name": "4",
+            "value": 8
+          },
+          {
+            "name": "3",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "name": "Extend",
+        "id": 12,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFCF",
+        "defaultval": 3,
+        "options": [
+          {
+            "name": "None",
+            "value": 0
+          },
+          {
+            "name": "70000",
+            "value": 16
+          },
+          {
+            "name": "50000",
+            "value": 32
+          },
+          {
+            "name": "30000",
+            "value": 48
+          }
+        ]
+      },
+      {
+        "name": "Flip Screen",
+        "id": 4,
+        "type": "check",
+        "enabled": true,
+        "persist": true,
+        "address": "0x40000000",
+        "defaultval": 0,
+        "value": 1,
+        "value_off": 0
+      }
+    ],
+    "messages": []
+  }
+}

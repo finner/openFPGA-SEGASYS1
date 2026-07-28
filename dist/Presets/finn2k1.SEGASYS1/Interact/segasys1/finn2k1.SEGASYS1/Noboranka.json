@@ -1,0 +1,214 @@
+{
+  "interact": {
+    "magic": "APF_VER_1",
+    "variables": [
+      {
+        "name": "Reset",
+        "id": 0,
+        "type": "action",
+        "enabled": true,
+        "address": "0x80000000",
+        "value": 1
+      },
+      {
+        "name": "Coin A",
+        "id": 10,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x20000000",
+        "mask": "0xFFFFFFFC",
+        "defaultval": 3,
+        "options": [
+          {
+            "name": "2 Coins/1 Credit",
+            "value": 0
+          },
+          {
+            "name": "1 Coin /3 Credits",
+            "value": 1
+          },
+          {
+            "name": "1 Coin /2 Credits",
+            "value": 2
+          },
+          {
+            "name": "1 Coin /1 Credit",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "name": "Coin B",
+        "id": 11,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x20000000",
+        "mask": "0xFFFFFFF3",
+        "defaultval": 3,
+        "options": [
+          {
+            "name": "2 Coins/1 Credit",
+            "value": 0
+          },
+          {
+            "name": "1 Coin /3 Credits",
+            "value": 4
+          },
+          {
+            "name": "1 Coin /2 Credits",
+            "value": 8
+          },
+          {
+            "name": "1 Coin /1 Credit",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "name": "Difficulty",
+        "id": 12,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x20000000",
+        "mask": "0xFFFFFFCF",
+        "defaultval": 2,
+        "options": [
+          {
+            "name": "Hardest",
+            "value": 0
+          },
+          {
+            "name": "Hard",
+            "value": 16
+          },
+          {
+            "name": "Easy",
+            "value": 32
+          },
+          {
+            "name": "Medium",
+            "value": 48
+          }
+        ]
+      },
+      {
+        "name": "Lives",
+        "id": 13,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFFC",
+        "defaultval": 3,
+        "options": [
+          {
+            "name": "99",
+            "value": 0
+          },
+          {
+            "name": "5",
+            "value": 1
+          },
+          {
+            "name": "2",
+            "value": 2
+          },
+          {
+            "name": "3",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "name": "Bonus Life",
+        "id": 14,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFF3",
+        "defaultval": 3,
+        "options": [
+          {
+            "name": "None",
+            "value": 0
+          },
+          {
+            "name": "60k 120k 180k",
+            "value": 4
+          },
+          {
+            "name": "50k 100k 150k",
+            "value": 8
+          },
+          {
+            "name": "40k 80k 120k 160k",
+            "value": 12
+          }
+        ]
+      },
+      {
+        "name": "Allow Continue",
+        "id": 15,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFEF",
+        "defaultval": 1,
+        "options": [
+          {
+            "name": "No",
+            "value": 0
+          },
+          {
+            "name": "Yes",
+            "value": 16
+          }
+        ]
+      },
+      {
+        "name": "Free Play",
+        "id": 16,
+        "type": "list",
+        "enabled": true,
+        "persist": false,
+        "writeonly": false,
+        "address": "0x30000000",
+        "mask": "0xFFFFFFDF",
+        "defaultval": 1,
+        "options": [
+          {
+            "name": "On",
+            "value": 0
+          },
+          {
+            "name": "Off",
+            "value": 32
+          }
+        ]
+      },
+      {
+        "name": "Flip Screen",
+        "id": 4,
+        "type": "check",
+        "enabled": true,
+        "persist": true,
+        "address": "0x40000000",
+        "defaultval": 0,
+        "value": 1,
+        "value_off": 0
+      }
+    ],
+    "messages": []
+  }
+}

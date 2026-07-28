@@ -11,38 +11,6 @@
         "value": 1
       },
       {
-        "name": "DIP Switch A",
-        "id": 2,
-        "type": "slider_u32",
-        "enabled": true,
-        "persist": false,
-        "address": "0x20000000",
-        "defaultval": 255,
-        "graphical": {
-          "signed": false,
-          "min": 0,
-          "max": 255,
-          "adjust_small": 1,
-          "adjust_large": 16
-        }
-      },
-      {
-        "name": "DIP Switch B",
-        "id": 3,
-        "type": "slider_u32",
-        "enabled": true,
-        "persist": false,
-        "address": "0x30000000",
-        "defaultval": 255,
-        "graphical": {
-          "signed": false,
-          "min": 0,
-          "max": 255,
-          "adjust_small": 1,
-          "adjust_large": 16
-        }
-      },
-      {
         "name": "Flip Screen",
         "id": 4,
         "type": "check",

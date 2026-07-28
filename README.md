@@ -24,6 +24,10 @@ Not yet: high-score save/load; split-opcode bootlegs
 (`wbmlb`); some titles blackwine never shipped (119, Bopeep, Shooting Master, Warball).
 UFO Senshi still needs a hardware confirm after ROM build.
 
+**DIP switches:** Core Settings shows named options (Lives, Coin A, …) from each
+game’s MRA via per-asset Interact under `Presets/finn2k1.SEGASYS1/Interact/`.
+Regenerate with `python3 scripts/gen_dip_interact.py` after editing MRAs.
+
 **Important:** blackwine uses a different packed `.rom` layout than the original MiSTer System 1
 core. Rebuild all `.rom` files from the MRAs in `mra/` after updating. `.rom` / `.sys` files
 are gitignored — build them locally with [mra-tools-c](https://github.com/sebdel/mra-tools-c/).
