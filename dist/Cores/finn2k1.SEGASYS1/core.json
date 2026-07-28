@@ -4,11 +4,11 @@
         "metadata": {
             "platform_ids": ["segasys1"],
             "shortname": "SEGASYS1",
-            "description": "Sega System 1 arcade core ported from MiSTer.",
+            "description": "Sega System 1/2 arcade core ported from MiSTer (blackwine System 2).",
             "author": "finn2k1",
             "url": "https://github.com/finner/openFPGA-SEGASYS1",
-            "version": "0.16",
-            "date_release": "2026-07-26"
+            "version": "0.18",
+            "date_release": "2026-07-28"
         },
         "framework": {
             "target_product": "Analogue Pocket",

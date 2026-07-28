@@ -30,8 +30,7 @@
                 "extensions": [
                     "sys"
                 ],
-                "address": "0x003FF000",
-                "size_exact": 1
+                "address": "0x003FF000"
             }
         ]
     }

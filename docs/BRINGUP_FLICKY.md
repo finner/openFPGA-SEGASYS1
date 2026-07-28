@@ -20,3 +20,6 @@
 - [ ] My Hero / Wonder Boy (horizontal)
 - [ ] Vertical titles (SYSMODE bit1) with 90° scaler mode
 - [ ] Block Gal spinner / Water Match dual-stick
+
+## Note after System 2 port
+- Rebuild `flicky.rom` from the updated blackwine MRA (ROM map changed).

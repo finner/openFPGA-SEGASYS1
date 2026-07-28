@@ -741,7 +741,10 @@ set_global_assignment -name NUM_PARALLEL_PROCESSORS 4
 set_global_assignment -name VERILOG_FILE core/iir_1st_order.v
 set_global_assignment -name QIP_FILE core/rtl/T80/T80.qip
 set_global_assignment -name QIP_FILE core/rtl/sn76489/sn76489.qip
+set_global_assignment -name SEARCH_PATH core/rtl
 set_global_assignment -name VERILOG_FILE core/rtl/SEGASYS1_PRGDEC.v
+set_global_assignment -name VERILOG_FILE core/rtl/MC8123.v
+set_global_assignment -name VERILOG_FILE core/rtl/sprite_rom_sram.v
 set_global_assignment -name VERILOG_FILE core/rtl/SEGASYS1_VIDEO.v
 set_global_assignment -name VERILOG_FILE core/rtl/SEGASYS1_SPRITE.v
 set_global_assignment -name VERILOG_FILE core/rtl/SEGASYS1_SOUND.v

@@ -37,14 +37,26 @@
         "defaultval": 0,
         "mask": "0xFF",
         "options": [
-          {"name": "Horizontal (Flicky/My Hero)", "value": 0},
+          {"name": "Horizontal (Flicky)", "value": 0},
+          {"name": "System 2 + rowscroll (Choplifter)", "value": 65},
           {"name": "Vertical", "value": 2},
           {"name": "Vertical H240", "value": 6},
           {"name": "H240", "value": 4},
           {"name": "Water Match", "value": 14},
           {"name": "Spinner (Block Gal)", "value": 50},
-          {"name": "TeddyBoy Blues", "value": 64}
+          {"name": "TeddyBoy Blues", "value": 192}
         ]
+      },
+      {
+        "name": "Quirks",
+        "id": 6,
+        "type": "number",
+        "enabled": true,
+        "address": "0x11000000",
+        "persist": false,
+        "writeonly": true,
+        "defaultval": 0,
+        "mask": "0xFF"
       },
       {
         "name": "DSW0",

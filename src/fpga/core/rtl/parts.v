@@ -78,21 +78,23 @@ module DPRAM2048
 
 	input					clk1,
 	input [10:0]		adr1,
-	output reg [7:0]	dat1,
+	output     [7:0]	dat1,
 
-	output reg [7:0]	dtr0
+	output     [7:0]	dtr0
 );
 
-reg [7:0] core [0:2047];
-
-always @( posedge clk0 ) begin
-	if (wen0) core[adr0] <= dat0;
-	else dtr0 <= core[adr0];
-end
-
-always @( posedge clk1 ) begin
-	dat1 <= core[adr1];
-end
+dpram #(.aWidth(11), .dWidth(8)) ram (
+	.clk_a(clk0),
+	.addr_a(adr0),
+	.we_a(wen0),
+	.d_a(dat0),
+	.q_a(dtr0),
+	.clk_b(clk1),
+	.addr_b(adr1),
+	.we_b(1'b0),
+	.d_b(8'h00),
+	.q_b(dat1)
+);
 
 endmodule
 
@@ -106,21 +108,23 @@ module DPRAM1024
 
 	input					clk1,
 	input  [9:0]		adr1,
-	output reg [7:0]	dat1,
+	output     [7:0]	dat1,
 
-	output reg [7:0]	dtr0
+	output     [7:0]	dtr0
 );
 
-reg [7:0] core [0:1023];
-
-always @( posedge clk0 ) begin
-	if (wen0) core[adr0] <= dat0;
-	else dtr0 <= core[adr0];
-end
-
-always @( posedge clk1 ) begin
-	dat1 <= core[adr1];
-end
+dpram #(.aWidth(10), .dWidth(8)) ram (
+	.clk_a(clk0),
+	.addr_a(adr0),
+	.we_a(wen0),
+	.d_a(dat0),
+	.q_a(dtr0),
+	.clk_b(clk1),
+	.addr_b(adr1),
+	.we_b(1'b0),
+	.d_b(8'h00),
+	.q_b(dat1)
+);
 
 endmodule
 
@@ -154,54 +158,84 @@ endmodule
 //----------------------------------
 //  VRAM
 //----------------------------------
+// Use explicit dual-port RAMs. Behavioral 3-port arrays get split by Quartus
+// into unsynced M10K copies (video reads stay empty → solid backdrop).
 module VRAMs
 (
-	input					clk0,
-	input       [9:0]	adr0,
-	output reg  [7:0]	dat0,
-	input       [7:0]	dtw0,
-	input					wen0,
+	input              clk0,
+	input      [12:0]  adr0,
+	output      [7:0]  dat0,
+	input       [7:0]  dtw0,
+	input              wen0,
 
-	input					clk1,
-	input       [9:0]	adr1,
-	output reg  [7:0]	dat1
+	input              clk1,
+	input      [12:0]  adr1,
+	output      [7:0]  dat1,
+
+	input      [12:0]  adr2,
+	output      [7:0]  dat2
 );
 
-reg [7:0] core [0:1023];
+wire [7:0] unused_q;
 
-always @( posedge clk0 ) begin
-	if (wen0) core[adr0] <= dtw0;
-	else dat0 <= core[adr0];
-end
+// CPU + video port 0
+dpram #(.aWidth(13), .dWidth(8)) bank0 (
+	.clk_a(clk0),
+	.addr_a(adr0),
+	.we_a(wen0),
+	.d_a(dtw0),
+	.q_a(dat0),
+	.clk_b(clk1),
+	.addr_b(adr1),
+	.we_b(1'b0),
+	.d_b(8'h00),
+	.q_b(dat1)
+);
 
-always @( posedge clk1 ) begin
-	dat1 <= core[adr1];
-end
+// Same CPU writes, video port 1
+dpram #(.aWidth(13), .dWidth(8)) bank1 (
+	.clk_a(clk0),
+	.addr_a(adr0),
+	.we_a(wen0),
+	.d_a(dtw0),
+	.q_a(unused_q),
+	.clk_b(clk1),
+	.addr_b(adr2),
+	.we_b(1'b0),
+	.d_b(8'h00),
+	.q_b(dat2)
+);
 
 endmodule
 
 module VRAM
 (
-	input					clk0,
-	input     [10:0]	adr0,
-	output     [7:0]	dat0,
-	input      [7:0]	dtw0,
-	input					wen0,
+	input            clk0,
+	input    [13:0]	 adr0,
+	output    [7:0]	 dat0,
+	input     [7:0]	 dtw0,
+	input            wen0,
 
-	input					clk1,
-	input       [9:0]	adr1,
-	output     [15:0]	dat1
+	input            clk1,
+	input    [12:0]	 adr1,
+	output   [15:0]  dat1,
+	input    [12:0]  adr2,
+	output   [15:0]  dat2
 );
 
 wire even = ~adr0[0];
 wire  odd =  adr0[0];
 
-wire [7:0] do00, do01, do10, do11;
-VRAMs ram0( clk0, adr0[10:1], do00, dtw0, wen0 & even, clk1, adr1, do10 );
-VRAMs ram1( clk0, adr0[10:1], do01, dtw0, wen0 &  odd, clk1, adr1, do11 );
+wire [7:0] do00, do01, do10, do11, do20, do21;
 
-assign dat0 = adr0[0] ? do01 : do00;
+VRAMs ram0(clk0, adr0[13:1], do00, dtw0, wen0 & even,
+           clk1, adr1, do10, adr2, do20);
+VRAMs ram1(clk0, adr0[13:1], do01, dtw0, wen0 &  odd,
+           clk1, adr1, do11, adr2, do21);
+
+assign dat0 = odd ? do01 : do00;
 assign dat1 = { do11, do10 };
+assign dat2 = { do21, do20 };
 
 endmodule
 
@@ -215,7 +249,7 @@ module LineBuf
 	input	     [9:0]	radr,
 	input	   			clre,
 	output reg [10:0]	rdat,
-	
+
 	input	    			clkw,
 	input	      [9:0]	wadr,
 	input	     [10:0]	wdat,
@@ -362,3 +396,38 @@ assign oDATA = iSEL0 ? iDATA0 :
 
 endmodule
 
+
+//----------------------------------
+//  Data Selector 9 to 1
+//----------------------------------
+module dataselector10(
+
+	output [7:0] oDATA,
+
+	input iSEL0, input [7:0] iDATA0,
+	input iSEL1, input [7:0] iDATA1,
+	input iSEL2, input [7:0] iDATA2,
+	input iSEL3, input [7:0] iDATA3,
+	input iSEL4, input [7:0] iDATA4,
+	input iSEL5, input [7:0] iDATA5,
+	input iSEL6, input [7:0] iDATA6,
+	input iSEL7, input [7:0] iDATA7,
+	input iSEL8, input [7:0] iDATA8,
+	input iSEL9, input [7:0] iDATA9,
+
+	input [7:0] dData
+);
+
+assign oDATA = iSEL0 ? iDATA0 :
+					iSEL1 ? iDATA1 :
+					iSEL2 ? iDATA2 :
+					iSEL3 ? iDATA3 :
+					iSEL4 ? iDATA4 :
+					iSEL5 ? iDATA5 :
+					iSEL6 ? iDATA6 :
+					iSEL7 ? iDATA7 :
+					iSEL8 ? iDATA8 :
+					iSEL9 ? iDATA9 :
+					dData;
+
+endmodule

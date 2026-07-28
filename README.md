@@ -1,19 +1,27 @@
 # openFPGA-SEGASYS1
-#
-# Sega System 1 arcade core for Analogue Pocket.
-# Ported from [MiSTer Arcade-SEGASYS1](https://github.com/MiSTer-devel/Arcade-SEGASYS1_MiSTer)
-# by MiSTer-X.
+
+Sega System 1 / System 2 arcade core for Analogue Pocket.
+
+Ported from [MiSTer Arcade-SEGASYS1](https://github.com/MiSTer-devel/Arcade-SEGASYS1_MiSTer)
+by MiSTer-X, with System 2 support from
+[blackwine’s fork](https://github.com/blackwine/Arcade-SEGASYS1_MiSTer).
 
 ## Status
 
-Initial openFPGA port (v0.16):
+System 1 + System 2 openFPGA port (v0.18):
 
-- Vendored MiSTer game RTL (`SEGASYSTEM1`, T80, SN76489, HVGEN, spinner)
-- APF `core_top` with ROM load, SYSMODE/DSW/flip via Interact, I2S audio
-- Asset presets for all 18 MiSTer-supported games
-- First bring-up target: **Flicky** (horizontal)
+- Vendored blackwine game RTL (`SEGASYSTEM1`, MC8123, T80, SN76489, HVGEN, spinner)
+- APF `core_top` with ROM load, SYSMODE/quirks/DSW/flip via Interact, I2S audio
+- Full 32KB sound ROM; 128KB sprite ROM in on-board SRAM; 8KB MC8123 key ROM
+- Verified on hardware: System 1 (Wonder Boy, Flicky, …), Choplifter, Wonder Boy in Monster Land
 
-Not yet: high-score save/load, Choplifter/Gardia/Noboranka (unsupported on MiSTer too).
+Not yet: high-score save/load; DakkoChan mahjong keyboard (quirks wired, inputs TBD);
+separate-opcode bootlegs (opcode ROM still stubbed); some blackwine titles without MRAs
+(119, Bopeep, Shooting Master, Warball, UFO Senshi, Toki no Senshi).
+
+**Important:** blackwine uses a different packed `.rom` layout than the original MiSTer System 1
+core. Rebuild all `.rom` files from the MRAs in `mra/` after updating. `.rom` / `.sys` files
+are gitignored — build them locally with [mra-tools-c](https://github.com/sebdel/mra-tools-c/).
 
 ## Requirements
 
@@ -36,21 +44,26 @@ This runs Quartus inside `didiermalenfant/quartus:22.1-apple-silicon` and writes
 ## Install on Pocket
 
 1. Copy the contents of `dist/` to the root of the Pocket SD card (merge folders).
-2. Build ROMs (example Flicky):
+2. Build ROMs (examples):
 
 ```bash
-mra "mra/Flicky (128k Version, 315-5051).mra"
-# place flicky.rom into Assets/segasys1/finn2k1.SEGASYS1/ (or Assets/segasys1/common/)
+./tools/mra -z roms -O dist/Assets/segasys1/finn2k1.SEGASYS1 \
+  "mra/Flicky (128k Version, 315-5051).mra"
+./tools/mra -z roms -O dist/Assets/segasys1/finn2k1.SEGASYS1 \
+  "mra/Choplifter (unprotected).mra"
+./tools/mra -z roms -O dist/Assets/segasys1/finn2k1.SEGASYS1 \
+  "mra/Wonder Boy in Monster Land (MC-8123).mra"
+# also write matching .sys bytes from each MRA rom index=1 (or use the JSON presets)
 ```
 
-3. Launch **SEGASYS1** from openFPGA and choose the Flicky JSON preset.
+3. Launch **SEGASYS1** from openFPGA and choose a JSON preset (Flicky, Choplifter, WBML, …).
 
 ## Controls
 
 | Pocket | Arcade |
 |--------|--------|
 | D-Pad | Joystick |
-| A / B / X | Trig1 / Trig2 / Trig3 |
+| A / B / X | Trig1 / Trig2 / Trig3 (order can swap via SYSMODE bit7) |
 | Start | Start 1P (Start on P2 pad = Start 2P) |
 | Select | Coin |
 | L1 | Pause |
@@ -59,11 +72,25 @@ Water Match uses P2 d-pad (or face buttons) as the second stick. Block Gal uses 
 
 ## SYSMODE
 
-Each game JSON preset programs SYSMODE/DSW from the MiSTer MRA. You can override them in Core Settings / Interact.
+Each game JSON preset programs SYSMODE/quirks/DSW from the MiSTer MRA. You can override them in Core Settings / Interact.
+
+| Bit | Meaning |
+|-----|---------|
+| 0 | System 2 |
+| 1 | Vertical |
+| 2 | H240 |
+| 3 | Water Match dual-stick |
+| 4 | CW (vs CCW) for vertical scaler |
+| 5 | Spinner (Block Gal) |
+| 6 | System 2 rowscroll (Choplifter; **not** WBML) |
+| 7 | Swap trig1/trig2 |
+
+Byte 1 of the `.sys` slot is the blackwine **quirks** value (Noboranka, DakkoChan, etc.).
 
 ## Attribution
 
-Original MiSTer core by MiSTer-X. T80 by Daniel Wallner. SN76489 core as included upstream.
+Original MiSTer System 1 core by MiSTer-X. System 2 / MC8123 work by blackwine.
+T80 by Daniel Wallner. SN76489 core as included upstream.
 openFPGA scaffolding patterns adapted from community arcade ports (e.g. openFPGA-Bagman).
 
 ## License
