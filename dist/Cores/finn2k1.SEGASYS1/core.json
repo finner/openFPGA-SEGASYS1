@@ -7,7 +7,7 @@
             "description": "Sega System 1/2 arcade core ported from MiSTer (blackwine System 2).",
             "author": "finn2k1",
             "url": "https://github.com/finner/openFPGA-SEGASYS1",
-            "version": "0.19",
+            "version": "0.20",
             "date_release": "2026-07-28"
         },
         "framework": {

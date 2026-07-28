@@ -300,17 +300,30 @@ assign user1 = 1'bZ;
 assign aux_scl = 1'bZ;
 assign vpll_feed = 1'bZ;
 
+// Interact-facing registers (declared early for bridge readback mux).
+reg  [7:0] cs_dsw0    = 8'hFF;
+reg  [7:0] cs_dsw1    = 8'h7C;
+reg        cs_flip    = 1'b0;
 
 // for bridge write data, we just broadcast it to all bus devices
 // for bridge read data, we have to mux it
-// add your own devices here
+// Interact DIPs/flip need readback for APF RMW (see interact.json).
 always @(*) begin
     casex(bridge_addr)
-    default: begin
-        bridge_rd_data <= 0;
+    32'h20xxxxxx: begin
+        bridge_rd_data <= {24'h0, cs_dsw0};
+    end
+    32'h30xxxxxx: begin
+        bridge_rd_data <= {24'h0, cs_dsw1};
+    end
+    32'h40xxxxxx: begin
+        bridge_rd_data <= {31'h0, cs_flip};
     end
     32'hF8xxxxxx: begin
         bridge_rd_data <= cmd_bridge_rd_data;
+    end
+    default: begin
+        bridge_rd_data <= 0;
     end
     endcase
 end
@@ -477,9 +490,7 @@ data_loader #(
 reg        cs_reset;
 reg  [7:0] cs_sysmode = 8'h00;
 reg  [7:0] cs_quirks  = 8'h00;
-reg  [7:0] cs_dsw0    = 8'hFF;
-reg  [7:0] cs_dsw1    = 8'h7C;
-reg        cs_flip    = 1'b0;
+// cs_dsw0 / cs_dsw1 / cs_flip declared above (bridge readback)
 
 // Accept either byte lane — APF memory_writes endian is ambiguous across paths.
 wire [7:0] bridge_wr_byte = bridge_wr_data[7:0] | bridge_wr_data[31:24];

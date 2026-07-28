@@ -5,14 +5,14 @@
             {
                 "type": "default",
                 "mappings": [
-                    {"id": 0, "name": "Up", "key": "pad_btn_up"},
-                    {"id": 1, "name": "Down", "key": "pad_btn_down"},
-                    {"id": 2, "name": "Left", "key": "pad_btn_left"},
-                    {"id": 3, "name": "Right", "key": "pad_btn_right"},
-                    {"id": 4, "name": "Button 1", "key": "pad_btn_a"},
-                    {"id": 5, "name": "Button 2", "key": "pad_btn_b"},
-                    {"id": 6, "name": "Coin", "key": "pad_btn_select"},
-                    {"id": 7, "name": "Start", "key": "pad_btn_start"}
+                    {"id": 0, "name": "Button 1", "key": "pad_btn_a"},
+                    {"id": 1, "name": "Button 2", "key": "pad_btn_b"},
+                    {"id": 2, "name": "Button 3", "key": "pad_btn_x"},
+                    {"id": 3, "name": "Button 4", "key": "pad_btn_y"},
+                    {"id": 4, "name": "Pause", "key": "pad_trig_l"},
+                    {"id": 5, "name": "Button 5", "key": "pad_trig_r"},
+                    {"id": 6, "name": "Start", "key": "pad_btn_start"},
+                    {"id": 7, "name": "Coin", "key": "pad_btn_select"}
                 ]
             }
         ]

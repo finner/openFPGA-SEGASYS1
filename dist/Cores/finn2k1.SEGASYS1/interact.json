@@ -15,11 +15,9 @@
         "id": 2,
         "type": "slider_u32",
         "enabled": true,
-        "address": "0x20000000",
         "persist": false,
-        "writeonly": true,
+        "address": "0x20000000",
         "defaultval": 255,
-        "mask": "0xFFFFFF00",
         "graphical": {
           "signed": false,
           "min": 0,
@@ -33,11 +31,9 @@
         "id": 3,
         "type": "slider_u32",
         "enabled": true,
-        "address": "0x30000000",
         "persist": false,
-        "writeonly": true,
+        "address": "0x30000000",
         "defaultval": 255,
-        "mask": "0xFFFFFF00",
         "graphical": {
           "signed": false,
           "min": 0,
@@ -51,13 +47,11 @@
         "id": 4,
         "type": "check",
         "enabled": true,
-        "address": "0x40000000",
         "persist": true,
-        "writeonly": true,
+        "address": "0x40000000",
         "defaultval": 0,
         "value": 1,
-        "value_off": 0,
-        "mask": "0xFFFFFFFE"
+        "value_off": 0
       }
     ],
     "messages": []
