@@ -8,7 +8,7 @@ by MiSTer-X, with System 2 support from
 
 ## Status
 
-System 1 + System 2 openFPGA port (v0.18):
+System 1 + System 2 openFPGA port (v0.19):
 
 - Vendored blackwine game RTL (`SEGASYSTEM1`, MC8123, T80, SN76489, HVGEN, spinner)
 - APF `core_top` with ROM load, SYSMODE/quirks/DSW/flip via Interact, I2S audio

@@ -6,11 +6,20 @@ SRC="$ROOT/dist/Cores/finn2k1.SEGASYS1"
 
 SD=""
 for v in /Volumes/*; do
-  if [[ -d "$v/Cores" || -d "$v/Assets" || -d "$v/Platforms" ]]; then
+  # Prefer a real Pocket card (Assets + Cores), skip the Mac boot volume.
+  if [[ -d "$v/Assets" && -d "$v/Cores" && -e "$v/Analogue_Pocket.json" ]]; then
     SD="$v"
     break
   fi
 done
+if [[ -z "$SD" ]]; then
+  for v in /Volumes/*; do
+    if [[ -d "$v/Assets" && -d "$v/Cores" ]]; then
+      SD="$v"
+      break
+    fi
+  done
+fi
 
 if [[ -z "$SD" ]]; then
   echo "No Pocket SD mounted under /Volumes. Plug it in and re-run."
