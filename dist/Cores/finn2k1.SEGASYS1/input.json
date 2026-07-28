@@ -5,18 +5,14 @@
             {
                 "type": "default",
                 "mappings": [
-                    {"id": "joypad.up", "name": "Up", "key": "pad_btn_up"},
-                    {"id": "joypad.down", "name": "Down", "key": "pad_btn_down"},
-                    {"id": "joypad.left", "name": "Left", "key": "pad_btn_left"},
-                    {"id": "joypad.right", "name": "Right", "key": "pad_btn_right"},
-                    {"id": "button_a", "name": "Trig1", "key": "pad_btn_a"},
-                    {"id": "button_b", "name": "Trig2", "key": "pad_btn_b"},
-                    {"id": "button_x", "name": "Trig3", "key": "pad_btn_x"},
-                    {"id": "button_y", "name": "Trig4", "key": "pad_btn_y"},
-                    {"id": "button_l1", "name": "Pause", "key": "pad_btn_l1"},
-                    {"id": "button_r1", "name": "Trig5", "key": "pad_btn_r1"},
-                    {"id": "button_select", "name": "Coin", "key": "pad_btn_select"},
-                    {"id": "button_start", "name": "Start", "key": "pad_btn_start"}
+                    {"id": 0, "name": "Up", "key": "pad_btn_up"},
+                    {"id": 1, "name": "Down", "key": "pad_btn_down"},
+                    {"id": 2, "name": "Left", "key": "pad_btn_left"},
+                    {"id": 3, "name": "Right", "key": "pad_btn_right"},
+                    {"id": 4, "name": "Button 1", "key": "pad_btn_a"},
+                    {"id": 5, "name": "Button 2", "key": "pad_btn_b"},
+                    {"id": 6, "name": "Coin", "key": "pad_btn_select"},
+                    {"id": 7, "name": "Start", "key": "pad_btn_start"}
                 ]
             }
         ]

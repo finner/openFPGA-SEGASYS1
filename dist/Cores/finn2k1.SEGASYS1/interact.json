@@ -11,74 +11,40 @@
         "value": 1
       },
       {
-        "name": "Orientation",
-        "id": 5,
-        "type": "list",
-        "enabled": true,
-        "address": "0x10000000",
-        "persist": false,
-        "writeonly": true,
-        "defaultval": 0,
-        "mask": "0x06",
-        "options": [
-          {"name": "Horizontal", "value": 0},
-          {"name": "Vertical", "value": 2},
-          {"name": "Vertical H240", "value": 6}
-        ]
-      },
-      {
-        "name": "SYSMODE",
-        "id": 1,
-        "type": "list",
-        "enabled": true,
-        "address": "0x10000000",
-        "persist": false,
-        "writeonly": true,
-        "defaultval": 0,
-        "mask": "0xFF",
-        "options": [
-          {"name": "Horizontal (Flicky)", "value": 0},
-          {"name": "System 2 + rowscroll (Choplifter)", "value": 65},
-          {"name": "Vertical", "value": 2},
-          {"name": "Vertical H240", "value": 6},
-          {"name": "H240", "value": 4},
-          {"name": "Water Match", "value": 14},
-          {"name": "Spinner (Block Gal)", "value": 50},
-          {"name": "TeddyBoy Blues", "value": 192}
-        ]
-      },
-      {
-        "name": "Quirks",
-        "id": 6,
-        "type": "number",
-        "enabled": true,
-        "address": "0x11000000",
-        "persist": false,
-        "writeonly": true,
-        "defaultval": 0,
-        "mask": "0xFF"
-      },
-      {
-        "name": "DSW0",
+        "name": "DIP Switch A",
         "id": 2,
-        "type": "number",
+        "type": "slider_u32",
         "enabled": true,
         "address": "0x20000000",
         "persist": false,
         "writeonly": true,
         "defaultval": 255,
-        "mask": "0xFF"
+        "mask": "0xFFFFFF00",
+        "graphical": {
+          "signed": false,
+          "min": 0,
+          "max": 255,
+          "adjust_small": 1,
+          "adjust_large": 16
+        }
       },
       {
-        "name": "DSW1",
+        "name": "DIP Switch B",
         "id": 3,
-        "type": "number",
+        "type": "slider_u32",
         "enabled": true,
         "address": "0x30000000",
         "persist": false,
         "writeonly": true,
-        "defaultval": 124,
-        "mask": "0xFF"
+        "defaultval": 255,
+        "mask": "0xFFFFFF00",
+        "graphical": {
+          "signed": false,
+          "min": 0,
+          "max": 255,
+          "adjust_small": 1,
+          "adjust_large": 16
+        }
       },
       {
         "name": "Flip Screen",
@@ -89,7 +55,9 @@
         "persist": true,
         "writeonly": true,
         "defaultval": 0,
-        "value": 1
+        "value": 1,
+        "value_off": 0,
+        "mask": "0xFFFFFFFE"
       }
     ],
     "messages": []
