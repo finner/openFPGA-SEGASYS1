@@ -13,15 +13,16 @@ System 1 + System 2 openFPGA port (v0.19):
 - Vendored blackwine game RTL (`SEGASYSTEM1`, MC8123, T80, SN76489, HVGEN, spinner)
 - APF `core_top` with ROM load, SYSMODE/quirks/DSW/flip via Interact, I2S audio
 - Full 32KB sound ROM; 128KB sprite ROM in on-board SRAM; 8KB MC8123 key ROM
-- Verified on hardware: System 1 (Wonder Boy, Flicky, …), Choplifter, WBML (JP + English VC)
+- Verified on hardware: System 1 (Wonder Boy, Flicky, …), Choplifter, WBML (JP + English VC),
+  Wonder Boy System 2, Toki no Senshi, DakkoChan House
 
 **Presets ready (build `.rom` from `mra/` when you have the zips):**
 Wonder Boy System 2 (`wboysys2`), Toki no Senshi (`tokisens`, vertical+CW),
-UFO Senshi Yohko Chan (`ufosensi`), DakkoChan House (`dakkochn`, mahjong mux in RTL).
+UFO Senshi Yohko Chan (`ufosensi`), DakkoChan House (`dakkochn`, mahjong panel via controller).
 
 Not yet: high-score save/load; split-opcode bootlegs
 (`wbmlb`); some titles blackwine never shipped (119, Bopeep, Shooting Master, Warball).
-DakkoChan needs a **bitstream rebuild** for the mahjong keyboard mux (assets alone may only attract).
+UFO Senshi still needs a hardware confirm after ROM build.
 
 **Important:** blackwine uses a different packed `.rom` layout than the original MiSTer System 1
 core. Rebuild all `.rom` files from the MRAs in `mra/` after updating. `.rom` / `.sys` files
