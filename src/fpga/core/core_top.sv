@@ -609,9 +609,38 @@ spinner #(15,25,5) spinner (
 
 wire [2:0] triggers = {SYSMODE[7] ? {m_trig_2, m_trig_1} : {m_trig_1, m_trig_2}, m_trig_3};
 
+// DakkoChan House (quirks==4): multiplexed mahjong panel (MiSTer blackwine).
+// Pocket has no PS/2 keyboard — map a usable subset onto the controller.
+localparam [7:0] DAKKOCHAN = 8'h04;
+wire       mux_clock;
+wire       m_y = joy[7]; // Y — last-chance / flip-flop / bet helper
+
+reg [7:0] dak_keys [0:6];
+reg [7:0] mux_shift;
+reg [2:0] mux_cnt;
+reg       mux_clock_r;
+
 reg [7:0] INP0, INP1, INP2;
 always @(posedge clk_sys) begin
-	if (SYSMODE[5]) begin
+	// Row mapping (MiSTer PS/2 layout, truncated for Pocket):
+	// 0: A=kan B=reach X=ron
+	// 2: dpad=a/b/c/d  Y=last chance
+	// 3: (held L) dpad=e/f/g/h — L is pause here, so use joy2 dpad when present
+	// 4/5: secondary face via P2 or unused zeros for now
+	// 6: Start=start  Y+Start=bet (approx)
+	dak_keys[0] <= {5'b0, m_trig_3, m_trig_2, m_trig_1};
+	dak_keys[1] <= 8'h00;
+	dak_keys[2] <= {3'b0, m_y, m_down, m_up, m_right, m_left};
+	dak_keys[3] <= {4'b0, joy2[1], joy2[0], joy2[3], joy2[2]};
+	dak_keys[4] <= {4'b0, joy2[6], joy2[5], joy2[7], joy2[4]};
+	dak_keys[5] <= {3'b0, m_y & m_trig_1, m_trig_2 & m_trig_1, m_trig_3 & m_trig_1, m_down & m_trig_1, m_up & m_trig_1};
+	dak_keys[6] <= {6'b0, m_y & m_start1, m_start1 | m_start2};
+
+	if (iRST && (quirks == DAKKOCHAN)) begin
+		mux_shift <= 8'h01;
+		mux_cnt   <= 3'd0;
+		mux_clock_r <= 1'b0;
+	end else if (SYSMODE[5]) begin
 		INP0 <= ~spin;
 		INP1 <= ~spin;
 		INP2 <= ~{m_trig_1, m_trig_1, m_start2, m_start1, 3'b000, m_coin};
@@ -619,6 +648,15 @@ always @(posedge clk_sys) begin
 		INP0 <= ~{m_lleft, m_lright, m_lup, m_ldown, m_rleft, m_rright, m_rup, m_rdown};
 		INP1 <= ~{m_lleft, m_lright, m_lup, m_ldown, m_rleft, m_rright, m_rup, m_rdown};
 		INP2 <= ~{m_trig, m_trig, m_start2, m_start1, 3'b000, m_coin};
+	end else if (quirks == DAKKOCHAN) begin
+		if (mux_clock & ~mux_clock_r) begin
+			mux_shift <= {1'b0, mux_shift[5:0], mux_shift[6]};
+			mux_cnt   <= (mux_cnt == 3'd6) ? 3'd0 : (mux_cnt + 3'd1);
+		end
+		INP0 <= ~dak_keys[mux_cnt];
+		INP1 <= mux_shift;
+		INP2 <= ~{m_trig, m_trig, 2'b00, 1'b0, 1'b0, 1'b0, m_coin};
+		mux_clock_r <= mux_clock;
 	end else begin
 		INP0 <= ~{m_left, m_right, m_up, m_down, 1'b0, triggers};
 		INP1 <= ~{m_left, m_right, m_up, m_down, 1'b0, triggers};
@@ -651,7 +689,6 @@ wire [7:0] hsdo_unused;
 wire       hblank_core, vblank_core;
 wire       hs;
 wire [14:0] hv_rgb;
-wire       mux_clock_unused;
 
 HVGEN hvgen (
 	.HPOS(HPOS),
@@ -704,7 +741,7 @@ SEGASYSTEM1 GameCore (
 	.system2(SYSMODE[0]),
 	.rowscroll(SYSMODE[6]),
 	.quirks(quirks),
-	.mux_clock(mux_clock_unused),
+	.mux_clock(mux_clock),
 
 	.PH(HPOS),
 	.PV(VPOS),

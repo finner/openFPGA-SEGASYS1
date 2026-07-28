@@ -63,5 +63,5 @@
 		<!-- maincpu:key, size: 0x2000 -->
 		<part crc="bb9df5ad" name="317-5014.key"/>
 	</rom>
-	<buttons names="Action/Run,Jump,-,-,-,Start 1P,Start 2P,Coin,Pause" default="A,B,X,R,L,Start,Select" count="2"/>
+	<buttons names="Kan,Reach,Ron,LastChance,-,Start/Bet,Coin,Pause" default="A,B,X,Y,L,Start,Select" count="4"/>
 </misterromdescription>

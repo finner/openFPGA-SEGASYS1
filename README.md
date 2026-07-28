@@ -13,15 +13,27 @@ System 1 + System 2 openFPGA port (v0.18):
 - Vendored blackwine game RTL (`SEGASYSTEM1`, MC8123, T80, SN76489, HVGEN, spinner)
 - APF `core_top` with ROM load, SYSMODE/quirks/DSW/flip via Interact, I2S audio
 - Full 32KB sound ROM; 128KB sprite ROM in on-board SRAM; 8KB MC8123 key ROM
-- Verified on hardware: System 1 (Wonder Boy, Flicky, …), Choplifter, Wonder Boy in Monster Land
+- Verified on hardware: System 1 (Wonder Boy, Flicky, …), Choplifter, WBML (JP + English VC)
 
-Not yet: high-score save/load; DakkoChan mahjong keyboard (quirks wired, inputs TBD);
-separate-opcode bootlegs (opcode ROM still stubbed); some blackwine titles without MRAs
-(119, Bopeep, Shooting Master, Warball, UFO Senshi, Toki no Senshi).
+**Presets ready (build `.rom` from `mra/` when you have the zips):**
+Wonder Boy System 2 (`wboysys2`), Toki no Senshi (`tokisens`, vertical+CW),
+UFO Senshi Yohko Chan (`ufosensi`), DakkoChan House (`dakkochn`, mahjong mux in RTL).
+
+Not yet: high-score save/load; split-opcode bootlegs
+(`wbmlb`); some titles blackwine never shipped (119, Bopeep, Shooting Master, Warball).
+DakkoChan needs a **bitstream rebuild** for the mahjong keyboard mux (assets alone may only attract).
 
 **Important:** blackwine uses a different packed `.rom` layout than the original MiSTer System 1
 core. Rebuild all `.rom` files from the MRAs in `mra/` after updating. `.rom` / `.sys` files
 are gitignored — build them locally with [mra-tools-c](https://github.com/sebdel/mra-tools-c/).
+
+### SYSMODE quick reference (common System 2)
+
+| Game | SYSMODE | Notes |
+|------|---------|--------|
+| Choplifter / UFO Senshi | `0x41` | System 2 + rowscroll |
+| WBML / Wonder Boy Sys2 / DakkoChan | `0x01` | System 2, no rowscroll |
+| Toki no Senshi | `0x13` | System 2 + vertical + CW |
 
 ## Requirements
 
